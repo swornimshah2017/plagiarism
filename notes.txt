@@ -1,0 +1,15 @@
+pip install lxml
+pip install requests
+pip install beautifulSoup4
+
+
+#how to install pip 
+
+download get-pip.py file from the net(follow the steps and go the page)
+run the file 
+then on environmental variabls add path to ../scripts folder of the python (probably on c: drive/...)
+
+
+#In higher version of python >3.xx  pip is already installed so just add the path to ../scripts folder in ENV variable
+
+#chcp 65001 # comand: is the utf-8 encoding that is set on the windows console to avoid the charmap error
