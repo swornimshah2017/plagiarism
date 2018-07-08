@@ -13,3 +13,10 @@ then on environmental variabls add path to ../scripts folder of the python (prob
 #In higher version of python >3.xx  pip is already installed so just add the path to ../scripts folder in ENV variable
 
 #chcp 65001 # comand: is the utf-8 encoding that is set on the windows console to avoid the charmap error
+
+
+---------------------------------------------------How to run local cache---------------------------
+1. install xampp or wamp
+2. put local-cache-folder in htdocs(for xampp users) or www(for wamp users)
+3. run the webserver xampp or wamp
+4. then run the script

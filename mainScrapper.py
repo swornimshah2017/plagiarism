@@ -6,7 +6,6 @@ import nltk
 import os
 from nltk.tokenize import sent_tokenize,word_tokenize
 import difflib
-from nltk.stem.porter import *
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -27,7 +26,15 @@ urlContainer=[
    "http://www.nepalipatra.com/"
 ]
 
-for index,eachurl in enumerate(urlContainer):
+#switch to urlContainer if there is internet connection
+cacheUrlContainer=[
+    "http://localhost/local-cache/ekantipur.html",
+    "http://localhost/local-cache/himlayan.html",
+    "http://localhost/local-cache/kathmandupost.html"
+
+    ]
+
+for index,eachurl in enumerate(cacheUrlContainer):
     request=requests.get(eachurl,headers={'User-Agent': 'Mozilla/5.0'})
     # request=requests.get("https://kec.edu.np/",headers={'User-Agent': 'Mozilla/5.0'})
     if request.status_code==200:
@@ -76,19 +83,24 @@ for eachPost in divPost:
     if(len(eachPost)>=10):
         eachPost=eachPost.strip()
         eachPost=eachPost.strip('\r\n')
-        print(sorted(list(set(sent_tokenize(eachPost)))))#remove whitespaces
-        if(len(eachPost.split())>4):
-            #only take posts having more than 4 words
-            filteredPosts.append(eachPost)
+        # print(sorted(list(set(sent_tokenize(eachPost)))))
+        # print((sent_tokenize(eachPost)))
+        # print(sent_tokenize(eachPost))
+        print("---------------------------------------------------------------------------------------------------------------------------------")
+        if(len(sent_tokenize(eachPost))>0):
+            eachPost=sent_tokenize(eachPost)[0]
+            if(len(eachPost.split())>4):
+                #only take posts having more than 4 words
+                filteredPosts.append(eachPost)
 
-filteredPosts.append('ahh ahh hola khai')
+# filteredPosts.append('ahh ahh hola khai')
 textToCheck=input("Enter the text for palarism ")
 textToCheck = [textToCheck]
-# filteredPosts=textToCheck+filteredPosts
+filteredPosts=textToCheck+filteredPosts
 tfidf_vectorizer = TfidfVectorizer()
 tfidf_matrix = tfidf_vectorizer.fit_transform(filteredPosts)
-# print (tfidf_matrix.shape)
-# print(cosine_similarity(tfidf_matrix[0:1], tfidf_matrix)) #[0:1] get the first row of the sparse matrix
+print (tfidf_matrix.shape)
+print(cosine_similarity(tfidf_matrix[0:1], tfidf_matrix)) #[0:1] get the first row of the sparse matrix
 
 container=cosine_similarity(tfidf_matrix[0:1], tfidf_matrix)#compare first with every body  (first,everybody)
 print(len(container[0]))
@@ -97,10 +109,22 @@ similarityScore=[]
 for each in container[0]:
     similarityScore.append(each)
 
+# remove the first element from both the list(similartity score and filteredPosts)
+del similarityScore[0]
+del filteredPosts[0]
+
+# find palarism by using t cosine algorithm 
+print("here is the palarsim sentence")
+print(filteredPosts[similarityScore.index(max(similarityScore))])
+print(similarityScore.index(max(similarityScore)))
+
 # print(similarityScore.sort())
 # print(similarityScore)
 print('program ended success')
 
+
+#find palarism using diff algorithm which might perform not so well when large sentence are present
+#rather use algorithm which basically finds the substring (quite straight forward)
 weighted_results=[]
 for result in filteredPosts:
     ratio = difflib.SequenceMatcher(None, result, textToCheck[0]).ratio()
@@ -116,4 +140,6 @@ for result in filteredPosts:
 for each in weighted_results:
     if((each[1]*100)>40):
         print(each)
+
+print(weighted_results[similarityScore.index(max(similarityScore))])
 
