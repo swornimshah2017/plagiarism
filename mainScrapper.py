@@ -14,6 +14,8 @@ from nltk.stem.porter import PorterStemmer
 
 os.system("chcp 65001")
 
+
+palarsimList=[]#this holds the palarism instances as a list
 innerUrls=[]
 divPost=[]
 filteredPosts=[]#this is the actual post that will be stored in the database
@@ -33,7 +35,7 @@ cacheUrlContainer=[
     "http://localhost/local-cache/kathmandupost.html"
 
     ]
-
+#switch the urlcontainer
 for index,eachurl in enumerate(cacheUrlContainer):
     request=requests.get(eachurl,headers={'User-Agent': 'Mozilla/5.0'})
     # request=requests.get("https://kec.edu.np/",headers={'User-Agent': 'Mozilla/5.0'})
@@ -72,6 +74,8 @@ for index,eachurl in enumerate(cacheUrlContainer):
             # stores nepali encoded character divs as well
             #you can later check for the nepali palarism too if the users writes in nepali characters
 
+        #create an palarism object to hold the urlname and the entire divPosts 
+
 print('total inner urls are ',len(innerUrls))
 for url in innerUrls:
     print(url)
@@ -85,7 +89,7 @@ for eachPost in divPost:
         eachPost=eachPost.strip('\r\n')
         # print(sorted(list(set(sent_tokenize(eachPost)))))
         # print((sent_tokenize(eachPost)))
-        # print(sent_tokenize(eachPost))
+        print(sent_tokenize(eachPost))
         print("---------------------------------------------------------------------------------------------------------------------------------")
         if(len(sent_tokenize(eachPost))>0):
             eachPost=sent_tokenize(eachPost)[0]
@@ -117,6 +121,8 @@ del filteredPosts[0]
 print("here is the palarsim sentence")
 print(filteredPosts[similarityScore.index(max(similarityScore))])
 print(similarityScore.index(max(similarityScore)))
+print('maximum percentage score is ',max(similarityScore))
+
 
 # print(similarityScore.sort())
 # print(similarityScore)
@@ -137,9 +143,9 @@ for result in filteredPosts:
 
 #filter data whose score is>=50%
 
-for each in weighted_results:
-    if((each[1]*100)>40):
-        print(each)
+# for each in weighted_results:
+#     if((each[1]*100)>40):
+#         print(each)
 
-print(weighted_results[similarityScore.index(max(similarityScore))])
+# print(weighted_results[similarityScore.index(max(similarityScore))])
 

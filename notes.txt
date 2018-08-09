@@ -1,7 +1,9 @@
 pip install lxml
 pip install requests
 pip install beautifulSoup4
-
+pip install -U nltk
+pip install -U scikit-learn
+pip install difflib
 
 #how to install pip 
 

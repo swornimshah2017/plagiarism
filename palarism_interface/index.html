@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="./jquery/jquery.js"></script>
+<style>
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 47.5%;
+    margin-top: 10px;
+}
+
+#customers td, #customers th {
+    border: 1px solid rgb(14, 207, 255);
+    padding: 8px;
+
+}
+
+#customers th{
+    font-size: 25px;
+    color: rgb(22, 255, 236);
+    color: white;
+
+}
+#customers td{
+    font-size: 18px;
+    color: white;
+}
+
+/* #customers tr:nth-child(even){background-color: orange;  color: white;} */
+#customers tr{background-color: rgb(255, 115, 22); }
+
+#customers tr:hover {background-color: rgb(255, 65, 65);}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+}
+
+body {
+  background: url('./palarism_background_image.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: 'Roboto', Tahoma, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 13px;
+}
+
+form {
+  outline: 0;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+form > .textbox {
+  outline: 0;
+  height: 60px;
+  font-size: 20px;
+  width: 40%;
+  line-height: 42px;
+  padding: 0 16px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #212121;
+  border: 0;
+  -webkit-border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px;
+}
+
+form > .textbox:focus {
+  outline: 0;
+  background-color: #FFF;
+}
+
+form > .button {
+  outline: 0;
+  background: none;
+  background-color: rgba(38, 50, 56, 0.8);
+  height: 60px;
+  width: 100px;
+  text-align: center;
+  line-height: 42px;
+  border: 0;
+  color: #FFF;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: 16px;
+  text-rendering: auto;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: background-color .4s ease;
+  transition: background-color .4s ease;
+  -webkit-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+form > .button:hover {
+  background-color: rgba(0, 150, 136, 0.8);
+}
+
+
+
+</style>
+</head>
+<body>
+    <div class="searchBarHolder">
+    <form method="post">
+        <input type="text" id="textBoxId" class="textbox" placeholder="text">
+        <input title="Search" value="Search Now" id="searchButton" class="button" onclick="loadDoc()">
+    </form>
+    </div>
+  
+
+<div id="tableHolder">
+<!-- <table id="customers">
+  <tr>
+    <th>Source Url</th>
+    <th>Palarsim Sentence</th>
+    <th>Percentage Matched</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Berglunds snabbköp</td>
+    <td>Christina Berglund</td>
+    <td>Sweden</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+  <tr>
+    <td>Ernst Handel</td>
+    <td>Roland Mendel</td>
+    <td>Austria</td>
+  </tr>
+  <tr>
+    <td>Island Trading</td>
+    <td>Helen Bennett</td>
+    <td>UK</td>
+  </tr>
+  <tr>
+    <td>Königlich Essen</td>
+    <td>Philip Cramer</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Laughing Bacchus Winecellars</td>
+    <td>Yoshi Tannamuri</td>
+    <td>Canada</td>
+  </tr>
+  <tr>
+    <td>Magazzini Alimentari Riuniti</td>
+    <td>Giovanni Rovelli</td>
+    <td>Italy</td>
+  </tr>
+  <tr>
+    <td>North/South</td>
+    <td>Simon Crowther</td>
+    <td>UK</td>
+  </tr>
+  <tr>
+    <td>Paris spécialités</td>
+    <td>Marie Bertrand</td>
+    <td>France</td>
+  </tr>
+</table> -->
+</div>
+
+<script>
+
+$(function() { alert('hi') })
+    function createTable(palarismList){
+        let eachtd=""
+        let tableRow=
+                    '<tr>' +
+                    '<th>Source Url</th>' +
+                    '<th>Palarism Sentence</th> ' +
+                    '<th>Percentage Matched</th>' +
+                    '</tr>'
+        palarismList.sort(function(a, b){return b - a});
+
+        for(var i=0;i<palarismList.length;i++){
+            let score=palarismList[i].score*100
+            let urlName=palarismList[i].urlName
+            let originalSentence=palarismList[i].originalSentence
+            eachtd+='<tr>' +'<td>'+urlName+'</td>'+'<td>'+originalSentence+'</td>'+'<td>'+score+'</td>'+'</tr>'
+        }
+        //append with the tableRow
+        document.getElementById('tableHolder').innerHTML='<table id="customers">'+tableRow+eachtd+'</table>'
+    }
+
+// '<tr>' +
+//     '<th>Heading</th>' +
+//     '<th>Heading</th> ' +
+//     '<th>Heading</th>' +
+//   '</tr>' +
+//   '<tr>' +
+//     '<td>cell</td>' +
+//     '<td>cell</td>' +
+//     '<td>cell</td>' +
+//   '</tr>' +
+//   '<tr>' +
+//     '<td>cell</td>' +
+//     '<td>cell</td>' +
+//     '<td>cell</td>' +
+//   '</tr>' +
+//   '<tr>' +
+//     '<td>cell</td>' +
+//     '<td>cell</td>' +
+//     '<td>cell</td>' +
+//   '</tr>'
+    function loadDoc() {
+
+      var testingSentence=document.getElementById('textBoxId').value
+      console.log(testingSentence)
+      if(confirm("Do you want to check the palarism?" )){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.status == 200) {
+          console.log(this.responseText)
+          var palarismList=JSON.parse(this.responseText)
+          console.log(typeof(palarismList))
+          console.log(palarismList[0].score)
+          console.log(palarismList.length)
+          createTable(palarismList)
+        }
+      };
+      xhttp.open("GET", "http://127.0.0.1:5000", true);
+      xhttp.send("data=data");
+      }else{
+
+      }
+      
+    }
+
+    loadDoc()
+
+    
+
+
+    </script>
+</body>
+
+
+</html>
+
+
