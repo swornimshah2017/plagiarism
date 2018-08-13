@@ -15,7 +15,6 @@ from nltk.stem.porter import PorterStemmer
 os.system("chcp 65001")
 
 
-palarsimList=[]#this holds the palarism instances as a list
 innerUrls=[]
 divPost=[]
 filteredPosts=[]#this is the actual post that will be stored in the database

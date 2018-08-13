@@ -108,7 +108,7 @@ form > .button:hover {
     <div class="searchBarHolder">
     <form method="post">
         <input type="text" id="textBoxId" class="textbox" placeholder="text">
-        <input title="Search" value="Search Now" id="searchButton" class="button" onclick="loadDoc()">
+        <input title="Search" value="Search Now" id="searchButton" class="button" onclick="sendSearchData()">
     </form>
     </div>
   
@@ -175,7 +175,19 @@ form > .button:hover {
 
 <script>
 
-$(function() { alert('hi') })
+  function sendSearchData(){
+    var plagarismText=document.getElementById('textBoxId').value
+    $.post('http://127.0.0.1:5000/',{write_search_query:plagarismText},function(data){
+      var palarismList=JSON.parse(data)
+          console.log(typeof(palarismList))
+          console.log(palarismList[0].score)
+          console.log(palarismList.length)
+          createTable(palarismList)   
+    })
+  }
+
+
+
     function createTable(palarismList){
         let eachtd=""
         let tableRow=
@@ -196,30 +208,9 @@ $(function() { alert('hi') })
         document.getElementById('tableHolder').innerHTML='<table id="customers">'+tableRow+eachtd+'</table>'
     }
 
-// '<tr>' +
-//     '<th>Heading</th>' +
-//     '<th>Heading</th> ' +
-//     '<th>Heading</th>' +
-//   '</tr>' +
-//   '<tr>' +
-//     '<td>cell</td>' +
-//     '<td>cell</td>' +
-//     '<td>cell</td>' +
-//   '</tr>' +
-//   '<tr>' +
-//     '<td>cell</td>' +
-//     '<td>cell</td>' +
-//     '<td>cell</td>' +
-//   '</tr>' +
-//   '<tr>' +
-//     '<td>cell</td>' +
-//     '<td>cell</td>' +
-//     '<td>cell</td>' +
-//   '</tr>'
     function loadDoc() {
 
-      var testingSentence=document.getElementById('textBoxId').value
-      console.log(testingSentence)
+      
       if(confirm("Do you want to check the palarism?" )){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -233,16 +224,12 @@ $(function() { alert('hi') })
         }
       };
       xhttp.open("GET", "http://127.0.0.1:5000", true);
-      xhttp.send("data=data");
+      xhttp.send();
       }else{
 
       }
       
     }
-
-    loadDoc()
-
-    
 
 
     </script>

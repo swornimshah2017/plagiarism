@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen,Request
 import os
 import difflib
+import requests
 
 # req = Request('https://thehimalayantimes.com/world/iran-urges-muslims-to-develop-sciences-to-shake-off-us-hegemony/', headers={'User-Agent': 'Mozilla/5.0'})
 # urlopen(req).read()
@@ -21,3 +22,6 @@ os.system("chcp 65001")
 
 ratio = difflib.SequenceMatcher(None, "hello ani ke cha ta jane haina ta usa ho ki newzealand huh broo ahhah ", "ke")
 print(ratio.ratio())
+
+userdata = {"firstname": "John", "lastname": "Doe", "password": "jdoe123"}
+resp = requests.post('http://localhost/chipalu/search_data.php', params=userdata)

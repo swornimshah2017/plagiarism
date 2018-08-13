@@ -14,17 +14,22 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.stem.porter import PorterStemmer
 from flask import Flask# for web server request
 from flask import Response
-from flask import request
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
+#Allow Cross origin Resource sharing : This is a kind of rule that allows the different site to access another servers resources outside the domain thus the name cross
+#When js sends the request it must have send allow-cross-origin header to this python remote server
+os.system("chcp 65001")
 
 
 @app.route("/",methods=['GET', 'POST'])
 def hello():
-
-    # if request.method=='POST':
     os.system("chcp 65001")
+
+    from flask import request
+    plagrismText=request.form['write_search_query']
+    # if request.method=='POST':
     class Palarism:
         def __init__(self, urlName,divPost):
             self.urlName=urlName #this holds the url of that web page
@@ -136,7 +141,7 @@ def hello():
         palarsimList[index].filteredPosts=filteredPosts
 
     # filteredPosts.append('ahh ahh hola khai')
-    textToCheck=input("Enter the text for palarism ")
+    textToCheck=plagrismText
     textToCheck = [textToCheck]
 
     #add the palarism sentence to each palarismObject in palarsimList
@@ -238,9 +243,7 @@ def hello():
     # print('server response data',jsonString)
     return resp
 
-
-
-
 #main code to run the flask server 
 if __name__ == "__main__":
     app.run()
+
