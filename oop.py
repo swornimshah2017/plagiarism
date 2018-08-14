@@ -1,4 +1,3 @@
-
 import requests,json
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -23,12 +22,13 @@ CORS(app)
 os.system("chcp 65001")
 
 
-@app.route("/",methods=['GET', 'POST'])
+@app.route("/",methods=['GET','POST'])
 def hello():
     os.system("chcp 65001")
-
     from flask import request
+
     plagrismText=request.form['write_search_query']
+
     # if request.method=='POST':
     class Palarism:
         def __init__(self, urlName,divPost):
@@ -55,20 +55,23 @@ def hello():
     # "http://www.fb.com/",
         "http://kathmandupost.ekantipur.com/",
         "http://annapurnapost.com/",
-    "http://www.nepalipatra.com/"
+    "http://www.nepalipatra.com/",
+    "https://www.bbc.com/news"
     ]
 
     #switch to urlContainer if there is internet connection
     cacheUrlContainer=[
-        "http://localhost/local-cache/ekantipur.html",
-        "http://localhost/local-cache/himlayan.html",
-        "http://localhost/local-cache/kathmandupost.html"
+        "http://localhost/chipalu/local-cache/ekantipur.html",
+        "http://localhost/chipalu/local-cache/himlayan.html",
+        "http://localhost/chipalu/local-cache/kathmandupost.html",
+        "http://localhost/chipalu/local-cache/bbc.html"
+
 
         ]
     #switch the urlcontainer
 
 
-    for index,eachurl in enumerate(urlContainer):
+    for index,eachurl in enumerate(cacheUrlContainer):
         request=requests.get(eachurl,headers={'User-Agent': 'Mozilla/5.0'})
         # request=requests.get("https://kec.edu.np/",headers={'User-Agent': 'Mozilla/5.0'})
         if request.status_code==200:
@@ -188,7 +191,7 @@ def hello():
 
 
     # print(similarityScore.sort())
-    # print(similarityScore)
+    print(similarityScore)
     print('program ended success')
 
 
@@ -246,4 +249,3 @@ def hello():
 #main code to run the flask server 
 if __name__ == "__main__":
     app.run()
-
